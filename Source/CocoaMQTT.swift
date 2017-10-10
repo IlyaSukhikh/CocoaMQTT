@@ -57,8 +57,6 @@ fileprivate enum CocoaMQTTReadTag: Int {
  */
 @objc public protocol CocoaMQTTDelegate {
     /// MQTT connected with server
-    // deprecated: use mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) to tell if connect to the server successfully
-    // func mqtt(_ mqtt: CocoaMQTT, didConnect host: String, port: Int)
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck)
     func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16)
     func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16)
@@ -292,16 +290,8 @@ open class CocoaMQTT: NSObject, CocoaMQTTClient, CocoaMQTTFrameBufferProtocol {
         frame.qos = message.qos.rawValue
         frame.retained = message.retained
         frame.dup = message.dup
-//        send(frame, tag: Int(msgid))
         _ = buffer.add(frame)
         
-        
-
-        if message.qos != CocoaMQTTQOS.qos0 {
-            
-        }
-        
-
         delegate?.mqtt(self, didPublishMessage: message, id: msgid)
 
         return msgid
@@ -645,8 +635,6 @@ class CocoaMQTTReader {
     }
 }
 
-
-
 /// MARK - Logger
 
 public enum CocoaMQTTLoggerLevel {
@@ -679,7 +667,6 @@ public class CocoaMQTTLogger: NSObject {
     func error(_ message: String) {
         log(level: .error, message: message)
     }
-    
 }
 
 // Convenience functions
