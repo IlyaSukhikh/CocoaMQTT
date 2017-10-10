@@ -76,6 +76,7 @@ fileprivate enum CocoaMQTTReadTag: Int {
  * Blueprint of the MQTT client
  */
 protocol CocoaMQTTClient {
+    
     var host: String { get set }
     var port: UInt16 { get set }
     var clientID: String { get }
@@ -93,7 +94,6 @@ protocol CocoaMQTTClient {
     func unsubscribe(_ topic: String) -> UInt16
     func publish(_ topic: String, withString string: String, qos: CocoaMQTTQOS, retained: Bool, dup: Bool) -> UInt16
     func publish(_ message: CocoaMQTTMessage) -> UInt16
-    
 }
 
 /**
